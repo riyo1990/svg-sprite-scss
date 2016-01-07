@@ -1,0 +1,127 @@
+// UTILS
+
+// STRIP UNIT
+// It strips the unit of measure and returns it
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+//MAP-SET
+// a map-set function (not included with Sass)
+@function map-set($map, $key, $value) {
+  $new: ($key: $value);
+  @return map-merge($map, $new);
+}
+
+/* Required variables */
+
+$base-font-size: 16px !default;
+$ieSprite: '.lt-ie9' !default;
+
+
+/* Convert to rem */
+
+@function to-rem($value, $global-rem-size: $base-font-size) {
+	$math: strip-unit($value) / strip-unit($global-rem-size) * 1rem;
+		@if ($math == 0rem) { $math: 0; }
+  	@return $math;
+}
+
+/* Class for ie < 10 (use e.g. Modernizr) */
+
+
+/* Get main sprite file */
+
+$sprite: map-get($images, sprite) !default;
+
+/* Get main sprite images array*/
+
+$sprite-map: $images;
+
+/* Get single image parameter */
+
+@function sprite-map-get-param($image, $param) {
+	$Image: map-get($sprite-map, $image);
+	
+	@if $Image == null {
+		@warn "Can't find an object with the name #{$image}";
+	}
+
+	@return map-get($Image, $param);
+}
+
+/* Get image parameters */
+
+@function image-params($image) {
+	$params: (
+		width: sprite-map-get-param($image, width),
+		height: sprite-map-get-param($image, height),
+		x: sprite-map-get-param($image, backgroundX),
+		y: sprite-map-get-param($image, backgroundY)
+	);
+
+	@return $params;
+}
+
+
+/* Placeholder for ie < 10 sprites */
+
+%sprite-ie {
+	 background-image: url(map-get($sprite, altPath));
+}
+
+/* Mixin for standard sprites */
+
+@mixin sprite-base($ratioX, $ratioY) {
+	display: inline-block;
+	background-image: url(map-get($sprite, svgPath));
+	background-size: to-rem(map-get($sprite, width) * $ratioX) to-rem(map-get($sprite, height) * $ratioY);
+}
+
+/* Mixin for ie < 10 sprites sprites */
+
+@mixin sprite-ie($image) {
+	$Image: image-params($image);
+
+	@if $ieSprite {
+		#{$ieSprite} & {
+				@extend %sprite-ie;
+				width: map-get($Image, width);
+				height: map-get($Image, height);
+				background-position: (map-get($Image, x) - 10) (map-get($Image, y) - 10);
+		}
+	}
+}
+
+/* Mixin for standard sprites */
+
+@mixin sprite($image, $sizeX: 0, $sizeY: 0) {
+	@include sprite-ie($image);
+	
+	$Image: image-params($image);
+	
+	@if  $sizeX > 0 and $sizeY > 0{
+		$widthRatio: strip-unit($sizeX) / strip-unit(map-get($Image, width)); 	
+		$heightRatio: strip-unit($sizeY) / strip-unit(map-get($Image, height));
+	}@else if $sizeX > 0 and $sizeY == 0{
+		$widthRatio: strip-unit($sizeX) / strip-unit(map-get($Image, width));
+		$heightRatio: strip-unit($sizeX) / strip-unit(map-get($Image, width));
+	}@else if $sizeX == 0 and $sizeY > 0{
+		$widthRatio: strip-unit($sizeY) / strip-unit(map-get($Image, height));
+		$heightRatio: strip-unit($sizeY) / strip-unit(map-get($Image, height));
+	}@else{
+		$widthRatio: 1;
+		$heightRatio: 1;
+	}	
+
+	@include sprite-base($widthRatio, $heightRatio);
+
+	width: to-rem(map-get($Image, width) * 	$widthRatio);
+	height: to-rem(map-get($Image, height) * $heightRatio);
+	
+	background-position: to-rem((map-get($Image, x) - 10) * $widthRatio) to-rem((map-get($Image, y) - 10) * $heightRatio);
+
+	
+
+}
+

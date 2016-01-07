@@ -1,0 +1,22 @@
+@import 'elements/sprite';
+
+/* Change required variables ($base-font-size, $ieSprite) before import plugin mixins */
+
+@import '../../build/sass/mixins';
+
+
+.class {
+	&:before {
+		/* @include sprite (image, width -> can be null, height  -> can be null) */
+		@include sprite(twitter,300);
+		content: '';
+		float: left;
+		margin-right: 0.5em;
+	}
+
+	&:hover {
+		&:before {
+			@include sprite(twitterHover,350);
+		}
+	}
+}

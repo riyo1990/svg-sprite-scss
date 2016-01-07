@@ -1,0 +1,18 @@
+{
+  "name": "svg-sprite-scss",
+  "version": "0.0.1",
+  "description": "Total package for management sprites in scss.",
+  "keywords": [
+    "scss",
+    "sprites",
+    "svg"
+  ],
+  "author": "Przemysław Wilk",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-svg-sprite": "^1.2.9",
+    "gulp-svg2png": "^0.3.0"
+  }
+}

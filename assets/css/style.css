@@ -1,0 +1,41 @@
+/* Change required variables ($base-font-size, $ieSprite) before import plugin mixins */
+/* Required variables */
+/* Convert to rem */
+/* Class for ie < 10 (use e.g. Modernizr) */
+/* Get main sprite file */
+/* Get main sprite images array*/
+/* Get single image parameter */
+/* Get image parameters */
+/* Placeholder for ie < 10 sprites */
+.lt-ie9 .class:before, .lt-ie9 .class:hover:before {
+  background-image: url("../images/sprite.png"); }
+
+/* Mixin for standard sprites */
+/* Mixin for ie < 10 sprites sprites */
+/* Mixin for standard sprites */
+.class:before {
+  display: inline-block;
+  background-image: url("../images/sprite.svg");
+  background-size: 60.9375rem 49.21875rem;
+  width: 18.75rem;
+  height: 12.89063rem;
+  background-position: -5.85938rem -5.85938rem;
+  content: '';
+  float: left;
+  margin-right: 0.5em; }
+  .lt-ie9 .class:before {
+    width: 32px;
+    height: 22px;
+    background-position: -10px -10px; }
+
+.class:hover:before {
+  display: inline-block;
+  background-image: url("../images/sprite.svg");
+  background-size: 71.09375rem 57.42188rem;
+  width: 21.875rem;
+  height: 15.03906rem;
+  background-position: -42.38281rem -6.83594rem; }
+  .lt-ie9 .class:hover:before {
+    width: 32px;
+    height: 22px;
+    background-position: -62px -10px; }
