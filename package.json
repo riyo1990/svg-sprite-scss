@@ -7,6 +7,10 @@
     "sprites",
     "svg"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/riyo1990/svg-sprite-scss.git"
+  },
   "author": "Przemysław Wilk",
   "license": "MIT",
   "devDependencies": {
